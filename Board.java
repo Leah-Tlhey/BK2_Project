@@ -47,7 +47,8 @@ public class Board extends JPanel implements ActionListener {
     private void doDrawing(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
-
+        BufferedImage background = ImageIO.read(new File("pics/house.png"));
+        g2d.drawImage(background,0,0,this);
         g2d.drawImage(spaceShip.getImage(), spaceShip.getX(),
                 spaceShip.getY(), this);
 
