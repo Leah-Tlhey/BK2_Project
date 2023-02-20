@@ -16,11 +16,11 @@ import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
 
-    private final int ICRAFT_X = 40;
-    private final int ICRAFT_Y = 60;
+    private final int ICRAFT_X = 350;
+    private final int ICRAFT_Y = 260;
     private final int DELAY = 10;
     private Timer timer;
-    private Spaceship spaceShip;
+    private Player player;
 
     public Board() {
 
@@ -33,7 +33,7 @@ public class Board extends JPanel implements ActionListener {
         setBackground(Color.BLACK);
         setFocusable(true);
 
-        spaceShip = new Spaceship(ICRAFT_X, ICRAFT_Y);
+        player = new Player(ICRAFT_X, ICRAFT_Y);
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -43,48 +43,52 @@ public class Board extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        doDrawing(g);
+        try {
+            doDrawing(g);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         Toolkit.getDefaultToolkit().sync();
     }
 
-    private void doDrawing(Graphics g) {
+    private void doDrawing(Graphics g) throws IOException {
 
         Graphics2D g2d = (Graphics2D) g;
-        BufferedImage background = ImageIO.read(new File("pics/house.png"));
+        BufferedImage background = ImageIO.read(new File("pics/myHouse-1.png"));
         g2d.drawImage(background,0,0,this);
-        g2d.drawImage(spaceShip.getImage(), spaceShip.getX(),
-                spaceShip.getY(), this);
-
+        g2d.drawImage(player.getImage(), player.getX(),
+                player.getY(), this);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-
-        updateSpaceShip();
-
+        updatePlayer();
         repaint();
     }
 
 
 
-    private void updateSpaceShip() {
-
-        spaceShip.move();
+    private void updatePlayer() {
+        player.move();
+        player.updateImage();
     }
 
     private class TAdapter extends KeyAdapter {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            spaceShip.keyReleased(e);
+            try {
+                player.keyReleased(e);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            spaceShip.keyPressed(e);
+            player.keyPressed(e);
         }
     }
 }
