@@ -13,6 +13,10 @@ public class Player extends Sprite {
 
     private String action = "NONE";
     private int actionImage = 0;
+    
+    public int energyLevel = 50;
+    public int hungerLevel = 50;
+    public int happinessLevel = 50;
 
 
     private final String[] myPics = {"pics/front1-1.png","pics/front2-1.png","pics/frontw1-1.png","pics/frontw2-1.png",
@@ -172,12 +176,46 @@ public class Player extends Sprite {
                 dy = 1;
                 break;
             case KeyEvent.VK_Y:
-                action = "YOGA";
+                doYoga();
+                break;
+            case KeyEvent.VK_E:
+                eat();
+                break;
+            case KeyEvent.VK_S:
+                sleep();
                 break;
         }
 
     }
-
+    public void doYoga(){
+        action = "YOGA";
+        energyLevel -= 10;
+        if (energyLevel < 0) {
+            energyLevel = 0;
+        }
+        happinessLevel += 10;
+        if (happinessLevel > 100) {
+            happinessLevel = 100;
+        }
+    }
+    public void sleep(){
+        //action="SLEEP";
+        energyLevel += 10;
+        if (energyLevel > 100) {
+            energyLevel = 100;
+        }
+        hungerLevel -= 10;
+        if (hungerLevel < 0) {
+            hungerLevel = 0;
+        }
+    }
+    public void eat(){
+        //action="EAT";
+        hungerLevel += 10;
+        if (hungerLevel > 100) {
+            hungerLevel = 100;
+        }
+    }
 
     public void keyReleased(KeyEvent e) throws InterruptedException {
         changeMoving(false);
