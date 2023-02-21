@@ -49,56 +49,10 @@
         happinessLabel.setFont(new Font("SansSerif", Font.BOLD, 48));
         happinessPanel.add(happinessLabel);
 
-        // Create action buttons
-        JButton feedButton = new JButton("Feed");
-        feedButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                hunger += 10;
-                if (hunger > 100) {
-                    hunger = 100;
-                }
-                hungerLabel.setText(String.valueOf(hunger));
-            }
-        });
-
-        JButton playButton = new JButton("Play");
-        playButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                player.doYoga();
-                energy -= 10;
-                if (energy < 0) {
-                    energy = 0;
-                }
-                happiness += 10;
-                if (happiness > 100) {
-                    happiness = 100;
-                }
-                energyLabel.setText(String.valueOf(energy));
-                happinessLabel.setText(String.valueOf(happiness));
-            }
-        });
-
-        JButton sleepButton = new JButton("Sleep");
-        sleepButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                energy += 10;
-                if (energy > 100) {
-                    energy = 100;
-                }
-                hunger -= 10;
-                if (hunger < 0) {
-                    hunger = 0;
-                }
-                energyLabel.setText(String.valueOf(energy));
-                hungerLabel.setText(String.valueOf(hunger));
-            }
-        });
+        
         add(hungerPanel);
         add(energyPanel);
         add(happinessPanel);
-        add(feedButton);
-        add(playButton);
-        add(sleepButton);
 
 
         player = new Player(ICRAFT_X, ICRAFT_Y);
@@ -133,6 +87,9 @@
     @Override
     public void actionPerformed(ActionEvent e) {
         updatePlayer();
+        energyLabel.setText(String.valueOf(player.energyLevel));
+        happinessLabel.setText(String.valueOf(player.happinessLevel));
+        hungerLabel.setText(String.valueOf(player.hungerLevel));
         repaint();
     }
 
