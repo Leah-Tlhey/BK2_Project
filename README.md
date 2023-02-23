@@ -10,3 +10,5 @@ E KEY --> make the character eat
 S KEY -->  make the character go to sleep
 The aim of the game is to get all of the character's levels (energy, hunger, and happiness) to 100% by performing the above tasks.
 We hope you enjoy the game!
+
+Asset Pack is by Cup Nooble on itch.io
