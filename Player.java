@@ -27,6 +27,8 @@ public class Player extends Sprite {
             "pics/frontw2-1.png","pics/front1-1.png","pics/front2-1.png","pics/stretchL.png","pics/front2-1.png",
             "pics/front1-1.png","pics/bend.png","pics/front1-1.png","pics/front2-1.png", "pics/stretchR.png",
             "pics/front2-1.png","pics/front1-1.png", "pics/frontw1-1.png", "pics/frontw2-1.png", "pics/front1-1.png"};
+    private final String[] eatFrames = {"pics/eat1.png","pics/eat2.png"};
+    
     public Player(int x, int y) {
         super(x, y);
         initPlayer();
@@ -49,6 +51,33 @@ public class Player extends Sprite {
             }else{
                 action="NONE";
                 actionImage = 0;
+            }
+        }
+        if(action.equals("SLEEP")){
+            x = 150;
+            y = 150;
+            loadImage("pics/sleep.png");
+            getImageDimensions();
+            incrementTimer(800);
+            if (animateTimer % 800 == 0) {
+                action="NONE";
+            }
+        }
+        if(action.equals("EAT")){
+            loadImage(eatFrames[actionImage]);
+            getImageDimensions();
+            if (animateTimer % 40 == 0) {
+                eatCount++;
+                if(actionImage==0){
+                    actionImage++;
+                }else{
+                    actionImage--;
+                }
+            }
+            incrementTimer(40);
+            if(eatCount>=10){
+                eatCount = 0;
+                action="NONE";
             }
         }
         if(action.equals("NONE")) {
@@ -199,7 +228,7 @@ public class Player extends Sprite {
         }
     }
     public void sleep(){
-        //action="SLEEP";
+        action="SLEEP";
         energyLevel += 10;
         if (energyLevel > 100) {
             energyLevel = 100;
@@ -210,7 +239,7 @@ public class Player extends Sprite {
         }
     }
     public void eat(){
-        //action="EAT";
+        action="EAT";
         hungerLevel += 10;
         if (hungerLevel > 100) {
             hungerLevel = 100;
